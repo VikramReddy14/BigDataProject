@@ -14,7 +14,7 @@ consumer = KafkaConsumer('User-Liked',bootstrap_servers=['localhost:9092'],auto_
 
 
 for message in consumer:
-  try:
+  
     a= message.key
     tweet_id = a.decode("utf-8")
     b=message.value
@@ -22,8 +22,7 @@ for message in consumer:
     print(tweet_value)
     query1=f"Insert into user_liked_tweets values({tweet_id},'{tweet_value}')"
     mysql_conn.execute_query(connection,query1)
-  except:
-      continue
+  
 
 
 
