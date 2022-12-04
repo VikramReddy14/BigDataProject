@@ -15,6 +15,7 @@ client = tweepy.Client(bearer_token)
 response=client.search_recent_tweets(query="iphone OR Musk",max_results=100,tweet_fields=['created_at','lang'],expansions=['author_id'])
 users={u['id']: u for u in response.includes['users']}
 
+counts=client.get_recent_tweets_count("NewYork",granularity='day')
 counts_retweets=client.get_recent_tweets_count('covid -is:retweet',granularity='day')
 
 #Extracting User_ID of the Following User
@@ -30,12 +31,21 @@ producer1 = KafkaProducer(bootstrap_servers=['localhost:9092'],key_serializer=la
 
 topic_name = 'Twitter-Kafka'
 topic_name1="User-Liked"
+topic_name_count="Count"
 topic_name_covid_retweet="Covid-Retweet"
 
 #Function for sending Covid Retweet counts to consumer
 def get_covid_retweet_counts():
     for count in counts_retweets.data:
         producer.send(topic_name_covid_retweet,json.dumps(count))
+
+#Function for sending Newyork tweet counts to consumer
+def get_tweet_counts():
+    for count in counts.data:
+        print(json.dumps(count))
+        producer.send(topic_name_count,json.dumps(count))
+
+#get_tweet_counts()
 
 def get_twitter_data1():
 
