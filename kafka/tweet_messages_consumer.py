@@ -5,9 +5,7 @@ import json
 
 with open('config.json') as json_file:
     data = json.load(json_file)
-my_sql_username=data["mysql_user"]
-my_sql_password=data["mysql_password"]
-connection=mysql_conn.create_db_connection("localhost",my_sql_username,my_sql_password,"twitter_data_ingestion")
+
 
 
 consumer = KafkaConsumer('Twitter-Kafka',bootstrap_servers=['localhost:9092'],auto_offset_reset='latest')
