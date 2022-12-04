@@ -69,3 +69,15 @@ def get_twitter_data2():
             print(tweet.id)
 
 #get_twitter_data2()
+
+def periodic_work(interval):
+    while True:
+        get_twitter_data1()
+        get_twitter_data2()
+        get_covid_retweet_counts()
+        get_tweet_counts()
+        #interval should be an integer, the number of seconds to wait
+        time.sleep(interval)
+
+periodic_work(60*1)  
+# get data every couple of minutes
