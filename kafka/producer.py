@@ -1,8 +1,12 @@
 import tweepy
+import json
+import tweepy
 
+#Twitter API Authentication
 
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAAkajwEAAAAACoklzU5Y6z%2BQfSDuqJbWpOmOvPU%3D115RjOCiJ75DIP9vSbHSFxoC65K6xheIdgB0uxJJ8IxNvTmlPE"
-
+with open('config.json') as json_file:
+    data = json.load(json_file)
+bearer_token=data["bearer_token"]
 client = tweepy.Client(bearer_token)
 
 response = client.search_recent_tweets("Covid")
